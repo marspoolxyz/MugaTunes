@@ -59,11 +59,12 @@ const FileUpload = ({
           byteStart,
           Math.min(file.size, byteStart + MAX_CHUNK_SIZE)
         );        
-        encodeArrayBuffer = Array.from(new Uint8Array(videoBuffer));
+        encodeArrayBuffer = Array.from(new Uint8Array(videoSlice));
 
         const bytesAsBuffer = Buffer.from(new Uint8Array(videoSlice));
         //chunkBuffers.push(bytesAsBuffer);
-      
+        console.log(" Byte Start " + byteStart );
+        console.log(encodeArrayBuffer);
         console.log(videoSlice);
 
         
