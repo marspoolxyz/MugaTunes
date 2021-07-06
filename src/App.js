@@ -23,7 +23,6 @@ function App() {
           multiple
           updateFilesCb={updateUploadedFiles}
         />
-        <button type="submit">Create New User</button>
       </form>
     </div>
   );

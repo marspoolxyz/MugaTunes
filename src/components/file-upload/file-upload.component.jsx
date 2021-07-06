@@ -1,4 +1,8 @@
 import React, { useRef, useState } from "react";
+import { ProgressBar } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 import {
   FileUploadContainer,
   FormField,
@@ -13,8 +17,11 @@ import {
   InputLabel
 } from "./file-upload.styles";
 
+
 const KILO_BYTES_PER_BYTE = 1000;
 const DEFAULT_MAX_FILE_SIZE_IN_BYTES = 500000;
+let percentage = 0;
+
 
 const convertNestedObjectToArray = (nestedObj) =>
   Object.keys(nestedObj).map((key) => nestedObj[key]);
@@ -30,7 +37,11 @@ const FileUpload = ({
   const fileInputField = useRef(null);
   const [files, setFiles] = useState({});
 
+  const [percent, setPercent] = useState({});
+
+
   const handleUploadBtnClick = () => {
+    setPercent(0);
     fileInputField.current.click();
   };
 
@@ -54,7 +65,12 @@ const FileUpload = ({
         byteStart < file.size;
         byteStart += MAX_CHUNK_SIZE, chunk++
       ) {
+        
+        percentage = Math.round((chunk/chunkCount)*100,0);
 
+        setPercent(percentage);
+
+        console.log(percentage);
         const videoSlice = videoBuffer.slice(
           byteStart,
           Math.min(file.size, byteStart + MAX_CHUNK_SIZE)
@@ -67,6 +83,7 @@ const FileUpload = ({
         console.log(encodeArrayBuffer);
         console.log(videoSlice);
 
+ 
         
       }      
 
@@ -103,6 +120,9 @@ const FileUpload = ({
 
   return (
     <>
+      <div width="50%"><ProgressBar now={percent} animated label={`${percentage}% completed`} /></div>
+      
+
       <FileUploadContainer>
         <InputLabel>{label}</InputLabel>
         <DragDropText>Drag and drop your files anywhere or</DragDropText>
@@ -118,9 +138,9 @@ const FileUpload = ({
           value=""
           {...otherProps}
         />
-      </FileUploadContainer>
+       </FileUploadContainer>
       <FilePreviewContainer>
-        <span>To Upload</span>
+
         <PreviewList>
           {Object.keys(files).map((fileName, index) => {
             let file = files[fileName];
