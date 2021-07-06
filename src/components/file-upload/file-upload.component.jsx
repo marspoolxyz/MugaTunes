@@ -62,9 +62,9 @@ const FileUpload = ({
         encodeArrayBuffer = Array.from(new Uint8Array(videoBuffer));
 
         const bytesAsBuffer = Buffer.from(new Uint8Array(videoSlice));
-        chunkBuffers.push(bytesAsBuffer);
+        //chunkBuffers.push(bytesAsBuffer);
       
-        console.log(chunkBuffers);
+        //console.log(chunkBuffers);
 
         
       }      
